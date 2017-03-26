@@ -1,0 +1,29 @@
+- name: Ensure security packages
+  apt: >
+    update_cache=yes cache_valid_time=604800
+    name=ufw,fail2ban
+
+- name: Allow OpenSSH
+  ufw: rule=limit name=OpenSSH
+
+- name: Allow public ports
+  ufw: rule=allow port="{{ item }}" proto=any
+  with_items: "{{ firewall_ports_allowed }}"
+  tags:
+    - firewall
+
+- name: Deny public ports
+  ufw: rule=deny port="{{ item }}" proto=any
+  with_items: "{{ firewall_ports_denied }}"
+  tags:
+    - firewall
+
+- name: Firewall rules
+  ufw: rule=allow port="{{ item.port }}" proto="{{ item.proto | default('any') }}" from="{{ item.from | default(omit) }}"
+  with_items: "{{ firewall_rules }}"
+  tags:
+    - firewall
+
+- name: Enable ufw
+  ufw: state="{{ enable_firewall | ternary('enabled', 'disabled') }}" policy="{{ firewall_default_policy }}"
+
