@@ -25,5 +25,5 @@
     - firewall
 
 - name: Enable ufw
-  ufw: state="{{ enable_firewall | ternary('enabled', 'disabled') }}" policy="{{ firewall_default_policy }}"
+  ufw: state="{{ enable_firewall | ternary('enabled', 'disabled') }}"
 

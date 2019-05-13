@@ -1,5 +1,4 @@
 enable_firewall: true
-firewall_default_policy: deny
 firewall_ports_allowed: []
 firewall_ports_denied: []
 firewall_rules: []
