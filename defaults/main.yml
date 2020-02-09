@@ -1,4 +1,4 @@
 enable_firewall: true
-firewall_ports_allowed: []
-firewall_ports_denied: []
+firewall_ports_allowed: {}
+firewall_ports_denied: {}
 firewall_rules: []
