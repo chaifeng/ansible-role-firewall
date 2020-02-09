@@ -7,14 +7,14 @@
   ufw: rule=limit name=OpenSSH
 
 - name: Allow public ports
-  ufw: rule=allow port="{{ item }}" proto=any
-  with_items: "{{ firewall_ports_allowed }}"
+  ufw: rule=allow port="{{ item.key }}" proto=any comment="{{ item.value | default(omit) }}"
+  loop: "{{ firewall_ports_allowed | dict2items }}"
   tags:
     - firewall
 
 - name: Deny public ports
-  ufw: rule=deny port="{{ item }}" proto=any
-  with_items: "{{ firewall_ports_denied }}"
+  ufw: rule=deny port="{{ item }}" proto=any comment="{{ item.value | default(omit) }}"
+  with_items: "{{ firewall_ports_denied | dict2items }}"
   tags:
     - firewall
 
